@@ -2,7 +2,19 @@ class Graph{
 	val vertex = mutableListOf<String>()
 	val edge = mutableMapOf<Pair<String, String>, Int>()
 
-	fun getMinimumRecoverTree(startVertex: String): Node{
+	fun checkEdges(): Boolean{
+		edge.forEach {
+			if(it.key.first !in vertex || it.key.second !in vertex){
+				return false
+			}
+		}
+		return true
+	}
+
+	fun getMinimumRecoverTree(startVertex: String): Node?{
+		if(!checkEdges()){
+			return null
+		}
 		val res = Node(startVertex)
 		val vertexTree = mutableListOf(startVertex)
 		val vertexTmp = vertex.toMutableList()
