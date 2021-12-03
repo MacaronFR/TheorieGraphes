@@ -1,20 +1,25 @@
 class Graph{
 	val vertex = mutableListOf<String>()
-	val edge = mutableMapOf<Pair<String, String>, Int>()
+	val adjency = mutableMapOf<String, MutableMap<String, Int>>()
 
-	fun checkEdges(): Boolean{
-		edge.forEach {
-			if(it.key.first !in vertex || it.key.second !in vertex){
-				return false
+	fun addEdge(from: String, to: String, weight: Int, oriented: Boolean = false): Boolean{
+		if(from !in vertex || to !in vertex){
+			return false
+		}
+		if(adjency[from] == null){
+			adjency[from] = mutableMapOf()
+		}
+		adjency[from]!![to] = weight
+		if(!oriented){
+			if(adjency[to] == null){
+				adjency[to] = mutableMapOf()
 			}
+			adjency[to]!![from] = weight
 		}
 		return true
 	}
 
-	fun getMinimumRecoverTree(startVertex: String): Node?{
-		if(!checkEdges()){
-			return null
-		}
+	fun getMinimumRecoverTree(startVertex: String): Node{
 		val res = Node(startVertex)
 		val vertexTree = mutableListOf(startVertex)
 		val vertexTmp = vertex.toMutableList()
@@ -27,13 +32,11 @@ class Graph{
 			vG = ""
 			vT = ""
 			vertexTree.forEach { vTree ->
-				vertexTmp.forEach { vGraph ->
-					edge[Pair(vTree, vGraph)]?.let {
-						if(it < min){
-							vG = vGraph
-							vT = vTree
-							min = it
-						}
+				adjency[vTree]?.forEach { vNear ->
+					if(vNear.key in vertexTmp && vNear.value < min){
+						vG = vNear.key
+						vT = vTree
+						min = vNear.value
 					}
 				}
 			}
