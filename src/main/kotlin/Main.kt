@@ -1,6 +1,6 @@
 fun main() {
 	val graph = getGraph()
-	val tree = graph.getMinimumRecoverTree("A")
+	val tree = graph.getMinimumRecoverTreeJarnikPrim("A")
 	tree.print()
 }
 

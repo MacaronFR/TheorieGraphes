@@ -7,6 +7,23 @@
  * @author MacaronFR
  */
 class Graph{
+
+	/**
+	 * Represent an Edge of the Graph
+	 * @author MacaronFR
+	 */
+	data class Edge(
+		var weight: Int,
+		var vertexFrom: String,
+		var vertexTo: String
+	){
+		infix fun assign(newValue: Edge){
+			weight = newValue.weight
+			vertexFrom = newValue.vertexFrom
+			vertexTo = newValue.vertexTo
+		}
+	}
+
 	val vertex = mutableListOf<String>()
 	private val adjacency = mutableMapOf<String, MutableMap<String, Int>>()
 
@@ -46,35 +63,31 @@ class Graph{
 		return true
 	}
 
+	fun addEdge(newEdge: Edge, oriented: Boolean = false): Boolean = addEdge(newEdge.vertexFrom, newEdge.vertexTo, newEdge.weight, oriented)
+
 	/**
 	 * Get the minimum recovering tree of the graph from [startVertex] using the Jàrnik-Prim algorithme
 	 * @param startVertex The starting vertex of the tree
 	 * @return The root node of the tree
 	 */
-	fun getMinimumRecoverTree(startVertex: String): Node{
+	fun getMinimumRecoverTreeJarnikPrim(startVertex: String): Node{
 		val res = Node(startVertex)
 		val vertexTree = mutableListOf(startVertex)
 		val vertexTmp = vertex.toMutableList()
-		var min: Int
-		var vG: String
-		var vT: String
+		val save = Edge(Int.MAX_VALUE, "", "")
 		vertexTmp.remove(startVertex)
 		while(vertexTmp.isNotEmpty()){
-			min = Int.MAX_VALUE
-			vG = ""
-			vT = ""
+			save assign Edge(Int.MAX_VALUE, "", "")
 			vertexTree.forEach { vTree ->
 				adjacency[vTree]?.forEach {vNear ->
-					if(vNear.key in vertexTmp && vNear.value < min){
-						vG = vNear.key
-						vT = vTree
-						min = vNear.value
+					if(vNear.key in vertexTmp && vNear.value < save.weight){
+						save assign Edge(vNear.value, vTree, vNear.key)
 					}
 				}
 			}
-			vertexTmp.remove(vG)
-			vertexTree.add(vG)
-			res.addTo(vT, vG)
+			vertexTmp.remove(save.vertexTo)
+			vertexTree.add(save.vertexTo)
+			res.addTo(save.vertexFrom, save.vertexTo)
 		}
 		return res
 	}
