@@ -6,13 +6,11 @@ fun main() {
 
 fun getGraph(): Graph{
 	val graph = Graph()
-	graph.vertex.add("A")
-	graph.vertex.add("B")
-	graph.vertex.add("C")
-	graph.vertex.add("D")
-	graph.vertex.add("E")
-	graph.vertex.add("F")
-	graph.vertex.add("G")
+	graph.initVertex {
+		('A'..'G').map {
+			it.toString()
+		}
+	}
 	graph.addEdge("A", "B",  5)
 	graph.addEdge("A", "C",  4)
 	graph.addEdge("B", "C",  10)
