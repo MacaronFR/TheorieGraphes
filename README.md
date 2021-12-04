@@ -12,9 +12,15 @@ On se retrouve donc avec un arbre ayant récupérer les arrêtes minimum entre c
 ```kotlin
 //Create a graph
 val graph = Graph()
+//Init vertex
+graph.initVertex{
+	('A'..'C').map {
+		it.toString()
+    } //Make a List<String> from a CharRange
+}
 //Add vertex and edges
-graph.vertex.add("A")
-graph.vertex.add("B")
+graph.vertex.add("D")
+graph.vertex.add("E")
 graph.edge[Pair<"A", "B">] = 5
 //Retrieve tree from graph with start vertex A
 val tree = graph.getMinimumRecoverTree("A")
