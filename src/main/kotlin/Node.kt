@@ -15,9 +15,6 @@ class Node(val name: String, val parent: Node? = null) {
 			children.add(Node(newChild, this))
 			return true
 		}
-		if(children.isEmpty()){
-			return false
-		}
 		children.forEach { child ->
 			if(child.addTo(node, newChild)){
 				return true
