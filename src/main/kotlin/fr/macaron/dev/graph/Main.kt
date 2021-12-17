@@ -3,9 +3,9 @@ package fr.macaron.dev.graph
 fun main() {
 	val graph = getGraph()
 	val tree = graph.getMinimumRecoverTreeJarnikPrim("A")
-	tree.print()
+	tree?.print()
 	val graph2 = graph.getMinimumRecoverTreeKruskal()
-	graph2.edgeFromAdjency().forEach {
+	graph2?.edgeFromAdjency()?.forEach {
 		println("From ${it.vertexFrom} to ${it.vertexTo} with weight ${it.weight}")
 	}
 }
