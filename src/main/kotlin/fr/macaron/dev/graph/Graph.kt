@@ -126,12 +126,14 @@ class Graph {
 		val res = Graph()
 		val edges = edgeFromAdjency().sortedBy { it.weight }
 		var i = 0
+		var count = 0
 		vertex.forEach {
 			res.vertex.add(it)
 		}
-		while(!res.isConnex() && i < edges.size){
+		while(count < vertex.size - 1 && i < edges.size){
 			if(edges[i].vertexTo !in res.getConnexityClassFromVertex(edges[i].vertexFrom)){
 				res.addEdge(edges[i])
+				count++
 			}
 			i++
 		}
