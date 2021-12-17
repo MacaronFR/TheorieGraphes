@@ -24,10 +24,10 @@ tasks.test {
 }
 
 tasks.dokkaHtml.configure{
+    outputDirectory.set(projectDir.resolve("doc"))
+    moduleName.set("Tree")
     dokkaSourceSets{
         named("main"){
-            outputDirectory.set(projectDir.resolve("doc"))
-            moduleName.set("Tree")
             sourceLink{
                 localDirectory.set(file("src/main/kotlin"))
                 remoteUrl.set(URL("https://github.com/MacaronFR/Tree/tree/master/src/main/kotlin"))
