@@ -68,8 +68,11 @@ class Graph {
 	fun addEdge(newEdge: Edge, oriented: Boolean = false): Boolean =
 		addEdge(newEdge.vertexFrom, newEdge.vertexTo, newEdge.weight, oriented)
 
-
-	fun edgeFromAdjency(): List<Edge>{
+	/**
+	 * Get list of [Edge] from adjacency list
+	 * @return The [List] of [Edge]
+	 */
+	fun edgeFromAdjacency(): List<Edge>{
 		val res = mutableListOf<Edge>()
 		adjacency.forEach { (from, dest) ->
 			dest.forEach { (to, weight) ->
@@ -79,9 +82,13 @@ class Graph {
 		return res
 	}
 
-	fun getConnexityClassFromVertex(name: String): List<String>{
+	/**
+	 * Get the list of vertex into the connected class of [vertex]
+	 * @return [List] of vertex in connected class of [vertex]
+	 */
+	infix fun connectedClassOf(vertex: String): List<String>{
 		val red = mutableListOf<String>()
-		val blue = mutableListOf(name)
+		val blue = mutableListOf(vertex)
 		while(blue.isNotEmpty()){
 			adjacency[blue[0]]?.forEach {
 				if(it.key !in blue && it.key !in red){
@@ -93,15 +100,15 @@ class Graph {
 		return red
 	}
 
-	fun isConnex(): Boolean = getConnexityClassFromVertex(vertex[0]) == vertex
+	fun isConnected(): Boolean = this connectedClassOf vertex[0] == vertex
 
 	/**
-	 * Get the minimum recovering tree of the graph from [startVertex] using the Jàrnik-Prim algorithme
+	 * Get the minimum recovering tree of the graph from [startVertex] using the Jàrnik-Prim algorithm in form of tree
 	 * @param startVertex The starting vertex of the tree
-	 * @return The root node of the tree
+	 * @return The root [Node] of the tree
 	 */
 	fun getMinimumRecoverTreeJarnikPrim(startVertex: String): Node? {
-		if(!isConnex()){
+		if(!isConnected()){
 			return null
 		}
 		val res = Node(startVertex)
@@ -125,19 +132,23 @@ class Graph {
 		return res
 	}
 
+	/**
+	 * Get the minimum recovering tree of the graph using Kruskal algorithm in form of [Graph]
+	 * @return The [Graph] of the tree
+	 */
 	fun getMinimumRecoverTreeKruskal(): Graph?{
-		if(!isConnex()){
+		if(!isConnected()){
 			return null
 		}
 		val res = Graph()
-		val edges = edgeFromAdjency().sortedBy { it.weight }
+		val edges = edgeFromAdjacency().sortedBy { it.weight }
 		var i = 0
 		var count = 0
 		vertex.forEach {
 			res.vertex.add(it)
 		}
 		while(count < vertex.size - 1 && i < edges.size){
-			if(edges[i].vertexTo !in res.getConnexityClassFromVertex(edges[i].vertexFrom)){
+			if(edges[i].vertexTo !in (res connectedClassOf  edges[i].vertexFrom)){
 				res.addEdge(edges[i])
 				count++
 			}
