@@ -1,11 +1,11 @@
 package fr.macaron.dev.graph
 
 /**
- * Class that represent a graph
- * You can access and modify [vertex] with [Graph].[vertex] attribute
- * You can initialize [vertex] with a [List] of [String]
- * To add an edge use [addEdge] method
- * If the graph is oriented specify value **true** to param **oriented** of [addEdge] method
+ * Class that represent a graph<br/>
+ * You can access and modify [vertex] with [Graph].[vertex] attribute<br/>
+ * You can initialize [vertex] with a [List] of [String]<br/>
+ * To add an edge use [addEdge] method<br/>
+ * If the graph is oriented specify value **true** to param **oriented** of [addEdge] method<br/>
  * @author MacaronFR
  */
 class Graph {

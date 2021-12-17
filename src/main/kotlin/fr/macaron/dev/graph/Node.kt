@@ -1,10 +1,12 @@
 package fr.macaron.dev.graph
 
 /**
- * Class that represent a [Node] of a Tree
- * Have [name], [children] and [parent]
- * Can be root or leave
- * We can add a child to a named [Node] (this one or any of [children]
+ * Class that represent a [Node] of a Tree <br/>
+ * Have [name], [children] and [parent] <br/>
+ * Can be root or leave<br/>
+ * We can add a child to a named [Node] (this one or any of [children])<br/>
+ * @author MacaronFR
+ * @constructor Provide a [name] and optionnaly a [parent] to the new [Node] (if [parent] is null, the [Node] is considered the root of the tree
  */
 class Node(val name: String, val parent: Node? = null) {
 	val children = mutableListOf<Node>()
