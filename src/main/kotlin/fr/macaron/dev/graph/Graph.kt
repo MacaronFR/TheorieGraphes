@@ -100,7 +100,10 @@ class Graph {
 	 * @param startVertex The starting vertex of the tree
 	 * @return The root node of the tree
 	 */
-	fun getMinimumRecoverTreeJarnikPrim(startVertex: String): Node {
+	fun getMinimumRecoverTreeJarnikPrim(startVertex: String): Node? {
+		if(!isConnex()){
+			return null
+		}
 		val res = Node(startVertex)
 		val vertexTree = mutableListOf(startVertex)
 		val vertexTmp = vertex.toMutableList()
@@ -122,7 +125,10 @@ class Graph {
 		return res
 	}
 
-	fun getMinimumRecoverTreeKruskal(): Graph{
+	fun getMinimumRecoverTreeKruskal(): Graph?{
+		if(!isConnex()){
+			return null
+		}
 		val res = Graph()
 		val edges = edgeFromAdjency().sortedBy { it.weight }
 		var i = 0
