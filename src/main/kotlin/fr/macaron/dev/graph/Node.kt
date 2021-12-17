@@ -8,8 +8,21 @@ package fr.macaron.dev.graph
  * @author MacaronFR
  * @constructor Provide a [name] and optionnaly a [parent] to the new [Node] (if [parent] is null, the [Node] is considered the root of the tree
  */
-class Node(val name: String, val parent: Node? = null) {
+class Node(val name: String, parent: Node? = null) {
+
+	var parent: Node? = null
+	set(value) {
+		parent?.let{
+			if(!searchChild(it.name)){
+				field = value
+			}
+		}
+	}
 	val children = mutableListOf<Node>()
+
+	init {
+		this.parent = parent
+	}
 
 	fun isRoot() = parent == null
 	fun isLeave() = children.size == 0
@@ -41,5 +54,14 @@ class Node(val name: String, val parent: Node? = null) {
 			println("From $name to ${it.name}")
 			it.print()
 		}
+	}
+
+	fun searchChild(name: String): Boolean{
+		children.forEach { child ->
+			if(child.name == name || child.searchChild(name)){
+				return true
+			}
+		}
+		return false
 	}
 }

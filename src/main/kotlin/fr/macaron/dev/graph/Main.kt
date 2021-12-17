@@ -4,6 +4,10 @@ fun main() {
 	val graph = getGraph()
 	val tree = graph.getMinimumRecoverTreeJarnikPrim("A")
 	tree.print()
+	val graph2 = graph.getMinimumRecoverTreeKruskal()
+	graph2.edgeFromAdjency().forEach {
+		println("From ${it.vertexFrom} to ${it.vertexTo} with weight ${it.weight}")
+	}
 }
 
 fun getGraph(): Graph {

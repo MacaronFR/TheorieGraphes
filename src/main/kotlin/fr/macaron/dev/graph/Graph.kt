@@ -68,6 +68,33 @@ class Graph {
 	fun addEdge(newEdge: Edge, oriented: Boolean = false): Boolean =
 		addEdge(newEdge.vertexFrom, newEdge.vertexTo, newEdge.weight, oriented)
 
+
+	fun edgeFromAdjency(): List<Edge>{
+		val res = mutableListOf<Edge>()
+		adjacency.forEach { (from, dest) ->
+			dest.forEach { (to, weight) ->
+				res.add(Edge(weight, from, to))
+			}
+		}
+		return res
+	}
+
+	fun getConnexityClassFromVertex(name: String): List<String>{
+		val red = mutableListOf<String>()
+		val blue = mutableListOf(name)
+		while(!blue.isEmpty()){
+			adjacency[blue[0]]?.forEach {
+				if(it.key !in blue && it.key !in red){
+					blue.add(it.key)
+				}
+			}
+			red.add(blue.removeAt(0))
+		}
+		return red
+	}
+
+	fun isConnex(): Boolean = getConnexityClassFromVertex(vertex[0]) == vertex
+
 	/**
 	 * Get the minimum recovering tree of the graph from [startVertex] using the Jàrnik-Prim algorithme
 	 * @param startVertex The starting vertex of the tree
@@ -91,6 +118,23 @@ class Graph {
 			vertexTmp.remove(save.vertexTo)
 			vertexTree.add(save.vertexTo)
 			res.addTo(save.vertexFrom, save.vertexTo)
+		}
+		return res
+	}
+
+	fun getMinimumRecoverTreeKruskal(): Graph{
+		val res = Graph()
+		val edges = edgeFromAdjency()
+		var i = 0
+		vertex.forEach {
+			res.vertex.add(it)
+		}
+		edges.sortedBy { it.weight }
+		while(!isConnex()){
+			if(!res.getConnexityClassFromVertex(edges[i].vertexFrom).contains(edges[i].vertexTo)){
+				res.addEdge(edges[i])
+			}
+			i++
 		}
 		return res
 	}
