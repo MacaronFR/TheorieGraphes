@@ -1,12 +1,14 @@
+package fr.macaron.dev.graph
+
 /**
  * Class that represent a graph
  * You can access and modify [vertex] with [Graph].[vertex] attribute
  * You can initialize [vertex] with a [List] of [String]
  * To add an edge use [addEdge] method
- * If the graph is oriented specify value <b>true</b> to param <b>oriented</b> of [addEdge] method
+ * If the graph is oriented specify value **true** to param **oriented** of [addEdge] method
  * @author MacaronFR
  */
-class Graph{
+class Graph {
 
 	/**
 	 * Represent an Edge of the Graph
@@ -16,8 +18,8 @@ class Graph{
 		var weight: Int,
 		var vertexFrom: String,
 		var vertexTo: String
-	){
-		infix fun assign(newValue: Edge){
+	) {
+		infix fun assign(newValue: Edge) {
 			weight = newValue.weight
 			vertexFrom = newValue.vertexFrom
 			vertexTo = newValue.vertexTo
@@ -31,7 +33,7 @@ class Graph{
 	 * Init the vertex with a lambda that return a [List]
 	 * @param init The lambda to execute that return [List]
 	 */
-	fun initVertex(init: () -> List<String>){
+	fun initVertex(init: () -> List<String>) {
 		init().forEach {
 			vertex.add(it)
 		}
@@ -46,16 +48,16 @@ class Graph{
 	 * @param oriented If false, make an edge from [from] to [to] AND from [to] to [from]
 	 * @return false if the edge is invalid, true otherwise
 	 */
-	fun addEdge(from: String, to: String, weight: Int, oriented: Boolean = false): Boolean{
-		if(from !in vertex || to !in vertex){
+	fun addEdge(from: String, to: String, weight: Int, oriented: Boolean = false): Boolean {
+		if(from !in vertex || to !in vertex) {
 			return false
 		}
-		if(adjacency[from] == null){
+		if(adjacency[from] == null) {
 			adjacency[from] = mutableMapOf()
 		}
 		adjacency[from]!![to] = weight
-		if(!oriented){
-			if(adjacency[to] == null){
+		if(!oriented) {
+			if(adjacency[to] == null) {
 				adjacency[to] = mutableMapOf()
 			}
 			adjacency[to]!![from] = weight
@@ -63,24 +65,25 @@ class Graph{
 		return true
 	}
 
-	fun addEdge(newEdge: Edge, oriented: Boolean = false): Boolean = addEdge(newEdge.vertexFrom, newEdge.vertexTo, newEdge.weight, oriented)
+	fun addEdge(newEdge: Edge, oriented: Boolean = false): Boolean =
+		addEdge(newEdge.vertexFrom, newEdge.vertexTo, newEdge.weight, oriented)
 
 	/**
 	 * Get the minimum recovering tree of the graph from [startVertex] using the Jàrnik-Prim algorithme
 	 * @param startVertex The starting vertex of the tree
 	 * @return The root node of the tree
 	 */
-	fun getMinimumRecoverTreeJarnikPrim(startVertex: String): Node{
+	fun getMinimumRecoverTreeJarnikPrim(startVertex: String): Node {
 		val res = Node(startVertex)
 		val vertexTree = mutableListOf(startVertex)
 		val vertexTmp = vertex.toMutableList()
 		val save = Edge(Int.MAX_VALUE, "", "")
 		vertexTmp.remove(startVertex)
-		while(vertexTmp.isNotEmpty()){
+		while(vertexTmp.isNotEmpty()) {
 			save assign Edge(Int.MAX_VALUE, "", "")
 			vertexTree.forEach { vTree ->
-				adjacency[vTree]?.forEach {vNear ->
-					if(vNear.key in vertexTmp && vNear.value < save.weight){
+				adjacency[vTree]?.forEach { vNear ->
+					if(vNear.key in vertexTmp && vNear.value < save.weight) {
 						save assign Edge(vNear.value, vTree, vNear.key)
 					}
 				}

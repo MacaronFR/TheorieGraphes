@@ -1,3 +1,5 @@
+package fr.macaron.dev.graph
+
 class Node(val name: String, val parent: Node? = null) {
 	val children = mutableListOf<Node>()
 
@@ -10,13 +12,13 @@ class Node(val name: String, val parent: Node? = null) {
 	 * @param newChild The name of the child [Node]
 	 * @return false on invalid [node], true otherwise
 	 */
-	fun addTo(node: String, newChild: String): Boolean{
-		if(node == name){
+	fun addTo(node: String, newChild: String): Boolean {
+		if(node == name) {
 			children.add(Node(newChild, this))
 			return true
 		}
 		children.forEach { child ->
-			if(child.addTo(node, newChild)){
+			if(child.addTo(node, newChild)) {
 				return true
 			}
 		}
@@ -26,7 +28,7 @@ class Node(val name: String, val parent: Node? = null) {
 	/**
 	 * Print the tree
 	 */
-	fun print(){
+	fun print() {
 		children.forEach {
 			println("From $name to ${it.name}")
 			it.print()
