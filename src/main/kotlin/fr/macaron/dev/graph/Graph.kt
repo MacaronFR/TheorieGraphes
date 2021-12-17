@@ -82,7 +82,7 @@ class Graph {
 	fun getConnexityClassFromVertex(name: String): List<String>{
 		val red = mutableListOf<String>()
 		val blue = mutableListOf(name)
-		while(!blue.isEmpty()){
+		while(blue.isNotEmpty()){
 			adjacency[blue[0]]?.forEach {
 				if(it.key !in blue && it.key !in red){
 					blue.add(it.key)
@@ -124,14 +124,13 @@ class Graph {
 
 	fun getMinimumRecoverTreeKruskal(): Graph{
 		val res = Graph()
-		val edges = edgeFromAdjency()
+		val edges = edgeFromAdjency().sortedBy { it.weight }
 		var i = 0
 		vertex.forEach {
 			res.vertex.add(it)
 		}
-		edges.sortedBy { it.weight }
-		while(!isConnex()){
-			if(!res.getConnexityClassFromVertex(edges[i].vertexFrom).contains(edges[i].vertexTo)){
+		while(!res.isConnex() && i < edges.size){
+			if(edges[i].vertexTo !in res.getConnexityClassFromVertex(edges[i].vertexFrom)){
 				res.addEdge(edges[i])
 			}
 			i++
