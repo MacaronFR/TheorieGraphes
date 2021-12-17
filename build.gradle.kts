@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "fr.macaron.dev"
-version = "v0.1"
+version = "v0.2"
 
 repositories {
     mavenCentral()
@@ -24,8 +24,8 @@ tasks.test {
 }
 
 tasks.dokkaHtml.configure{
-    outputDirectory.set(projectDir.resolve("doc"))
-    moduleName.set("Tree")
+    outputDirectory.set(projectDir.resolve("docs"))
+    moduleName.set("Théorie des Graphes")
     dokkaSourceSets{
         named("main"){
             sourceLink{
