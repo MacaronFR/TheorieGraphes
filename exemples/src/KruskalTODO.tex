@@ -1,0 +1,200 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[french]{babel}
+\usepackage{fancyhdr,lastpage}
+\usepackage{pstricks-add}
+\usepackage{tikz}
+\usepackage[french,ruled,linesnumbered,vlined]{algorithm2e}
+\usepackage{multicol}
+
+\pagestyle{fancy}
+\fancyhead[L]{Démonstration Jàrnik Prim}
+\fancyhead[R]{MacaronFR/TheorieGraphes}
+\fancyfoot[C]{Page \thepage{} / \pageref{LastPage}}
+
+\begin{document}
+
+\paragraph{Présentation}
+L'algorithme de Jàrnik-Prim sert à trouver l'arbre recouvrant minimum dans un graphe non orienté pondéré.
+Il part d'un sommet du graphe, puis va relier tout les sommet n'appartenant à l'arbre de résultat dont l'arrête à le poids minimum.
+
+\paragraph{Algorithme}\hfill
+\begin{algorithm}
+\caption{Jàrnik-Prim}
+$G$ un graphe connexe\\
+choisir un sommet $s$ de G\\
+$A \gets \{s, o\}$\;
+\Tq{A n'est pas un sous-graphes recouvrant de G}{
+	parmis les arrêtes $xy$ de $G$ avec $x$ dans $A$ et $y$ dans $G - A$\\
+	en choisir une de couts minimum\\
+	ajouter à A le sommet $y$ et l'arrête $xy$
+}
+retourner $A$
+\end{algorithm}
+
+\paragraph{Trace}
+Les sommets et les arrêtes de A seront noté en rouge\\
+
+\begin{multicols}{2}
+\begin{tikzpicture}
+\matrix[nodes={draw,circle}, row sep=0.5cm, column sep=0.7cm]{
+	;&;&\node[fill=red](a){A}; \\
+	;&\node(b){B}; &;&;&\node(c){C};\\
+	;&;&;\node(e){E};\\
+	\node(d){D};&;&;&;&\node(f){F};\\
+	;&;&\node(g){G};\\
+};
+\tikzstyle{fleche} = [draw,thick,>=latex]
+\draw[fleche] (a) -- node[above left]{$5$}(b);
+\draw[fleche] (a) -- node[above right]{$4$}(c);
+\draw[fleche] (b) -- node[above]{$10$}(c);
+\draw[fleche] (b) -- node[above left]{$2$}(d);
+\draw[fleche] (b) -- node[above right]{$2$}(e);
+\draw[fleche] (c) -- node[above left]{$8$}(e);
+\draw[fleche] (c) -- node[right]{$5$}(f);
+\draw[fleche] (d) -- node[above left]{$1$}(e);
+\draw[fleche] (d) -- node[above right]{$6$}(g);
+\draw[fleche] (e) -- node[above right]{$3$}(f);
+\draw[fleche] (f) -- node[above left]{$6$}(g);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\matrix[nodes={draw,circle}, row sep=0.5cm, column sep=0.7cm]{
+	;&;&\node[fill=red](a){A}; \\
+	;&\node(b){B}; &;&;&\node[fill=red](c){C};\\
+	;&;&;\node(e){E};\\
+	\node(d){D};&;&;&;&\node(f){F};\\
+	;&;&\node(g){G};\\
+};
+\tikzstyle{fleche} = [draw,thick,>=latex]
+\draw[fleche] (a) -- node[above left]{$5$}(b);
+\draw[fleche,red] (a) -- node[above right]{$4$}(c);
+\draw[fleche] (b) -- node[above]{$10$}(c);
+\draw[fleche] (b) -- node[above left]{$2$}(d);
+\draw[fleche] (b) -- node[above right]{$2$}(e);
+\draw[fleche] (c) -- node[above left]{$8$}(e);
+\draw[fleche] (c) -- node[right]{$5$}(f);
+\draw[fleche] (d) -- node[above left]{$1$}(e);
+\draw[fleche] (d) -- node[above right]{$6$}(g);
+\draw[fleche] (e) -- node[above right]{$3$}(f);
+\draw[fleche] (f) -- node[above left]{$6$}(g);
+\end{tikzpicture}
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+\begin{tikzpicture}
+\matrix[nodes={draw,circle}, row sep=0.5cm, column sep=0.7cm]{
+	;&;&\node[fill=red](a){A}; \\
+	;&\node[fill=red](b){B}; &;&;&\node[fill=red](c){C};\\
+	;&;&;\node(e){E};\\
+	\node(d){D};&;&;&;&\node(f){F};\\
+	;&;&\node(g){G};\\
+};
+\tikzstyle{fleche} = [draw,thick,>=latex]
+\draw[fleche,red] (a) -- node[above left]{$5$}(b);
+\draw[fleche,red] (a) -- node[above right]{$4$}(c);
+\draw[fleche] (b) -- node[above]{$10$}(c);
+\draw[fleche] (b) -- node[above left]{$2$}(d);
+\draw[fleche] (b) -- node[above right]{$2$}(e);
+\draw[fleche] (c) -- node[above left]{$8$}(e);
+\draw[fleche] (c) -- node[right]{$5$}(f);
+\draw[fleche] (d) -- node[above left]{$1$}(e);
+\draw[fleche] (d) -- node[above right]{$6$}(g);
+\draw[fleche] (e) -- node[above right]{$3$}(f);
+\draw[fleche] (f) -- node[above left]{$6$}(g);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\matrix[nodes={draw,circle}, row sep=0.5cm, column sep=0.7cm]{
+	;&;&\node[fill=red](a){A}; \\
+	;&\node[fill=red](b){B}; &;&;&\node[fill=red](c){C};\\
+	;&;&;\node(e){E};\\
+	\node[fill=red](d){D};&;&;&;&\node(f){F};\\
+	;&;&\node(g){G};\\
+};
+\tikzstyle{fleche} = [draw,thick,>=latex]
+\draw[fleche,red] (a) -- node[above left]{$5$}(b);
+\draw[fleche,red] (a) -- node[above right]{$4$}(c);
+\draw[fleche] (b) -- node[above]{$10$}(c);
+\draw[fleche,red] (b) -- node[above left]{$2$}(d);
+\draw[fleche] (b) -- node[above right]{$2$}(e);
+\draw[fleche] (c) -- node[above left]{$8$}(e);
+\draw[fleche] (c) -- node[right]{$5$}(f);
+\draw[fleche] (d) -- node[above left]{$1$}(e);
+\draw[fleche] (d) -- node[above right]{$6$}(g);
+\draw[fleche] (e) -- node[above right]{$3$}(f);
+\draw[fleche] (f) -- node[above left]{$6$}(g);
+\end{tikzpicture}
+\end{multicols}
+
+\begin{multicols}{2}
+\begin{tikzpicture}
+\matrix[nodes={draw,circle}, row sep=0.5cm, column sep=0.7cm]{
+	;&;&\node[fill=red](a){A}; \\
+	;&\node[fill=red](b){B}; &;&;&\node[fill=red](c){C};\\
+	;&;&;\node[fill=red](e){E};\\
+	\node[fill=red](d){D};&;&;&;&\node(f){F};\\
+	;&;&\node(g){G};\\
+};
+\tikzstyle{fleche} = [draw,thick,>=latex]
+\draw[fleche,red] (a) -- node[above left]{$5$}(b);
+\draw[fleche,red] (a) -- node[above right]{$4$}(c);
+\draw[fleche] (b) -- node[above]{$10$}(c);
+\draw[fleche,red] (b) -- node[above left]{$2$}(d);
+\draw[fleche] (b) -- node[above right]{$2$}(e);
+\draw[fleche] (c) -- node[above left]{$8$}(e);
+\draw[fleche] (c) -- node[right]{$5$}(f);
+\draw[fleche,red] (d) -- node[above left]{$1$}(e);
+\draw[fleche] (d) -- node[above right]{$6$}(g);
+\draw[fleche] (e) -- node[above right]{$3$}(f);
+\draw[fleche] (f) -- node[above left]{$6$}(g);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\matrix[nodes={draw,circle}, row sep=0.5cm, column sep=0.7cm]{
+	;&;&\node[fill=red](a){A}; \\
+	;&\node[fill=red](b){B}; &;&;&\node[fill=red](c){C};\\
+	;&;&;\node[fill=red](e){E};\\
+	\node[fill=red](d){D};&;&;&;&\node[fill=red](f){F};\\
+	;&;&\node(g){G};\\
+};
+\tikzstyle{fleche} = [draw,thick,>=latex]
+\draw[fleche,red] (a) -- node[above left]{$5$}(b);
+\draw[fleche,red] (a) -- node[above right]{$4$}(c);
+\draw[fleche] (b) -- node[above]{$10$}(c);
+\draw[fleche,red] (b) -- node[above left]{$2$}(d);
+\draw[fleche] (b) -- node[above right]{$2$}(e);
+\draw[fleche] (c) -- node[above left]{$8$}(e);
+\draw[fleche] (c) -- node[right]{$5$}(f);
+\draw[fleche,red] (d) -- node[above left]{$1$}(e);
+\draw[fleche] (d) -- node[above right]{$6$}(g);
+\draw[fleche,red] (e) -- node[above right]{$3$}(f);
+\draw[fleche] (f) -- node[above left]{$6$}(g);
+\end{tikzpicture}
+\end{multicols}
+
+\begin{multicols}{2}
+\begin{tikzpicture}
+\matrix[nodes={draw,circle}, row sep=0.5cm, column sep=0.7cm]{
+	;&;&\node[fill=red](a){A}; \\
+	;&\node[fill=red](b){B}; &;&;&\node[fill=red](c){C};\\
+	;&;&;\node[fill=red](e){E};\\
+	\node[fill=red](d){D};&;&;&;&\node[fill=red](f){F};\\
+	;&;&\node[fill=red](g){G};\\
+};
+\tikzstyle{fleche} = [draw,thick,>=latex]
+\draw[fleche,red] (a) -- node[above left]{$5$}(b);
+\draw[fleche,red] (a) -- node[above right]{$4$}(c);
+\draw[fleche] (b) -- node[above]{$10$}(c);
+\draw[fleche,red] (b) -- node[above left]{$2$}(d);
+\draw[fleche] (b) -- node[above right]{$2$}(e);
+\draw[fleche] (c) -- node[above left]{$8$}(e);
+\draw[fleche] (c) -- node[right]{$5$}(f);
+\draw[fleche,red] (d) -- node[above left]{$1$}(e);
+\draw[fleche,red] (d) -- node[above right]{$6$}(g);
+\draw[fleche,red] (e) -- node[above right]{$3$}(f);
+\draw[fleche] (f) -- node[above left]{$6$}(g);
+\end{tikzpicture}
+\end{multicols}
+
+\end{document}
