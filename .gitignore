@@ -2,3 +2,6 @@
 .gradle
 build
 gradle
+exemples/src/*.log
+exemples/src/*.aux
+exemples/src/*.pdf
